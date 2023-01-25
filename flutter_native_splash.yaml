@@ -1,0 +1,14 @@
+# flutter_native_splash-development.yaml
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/logo_movie_big.png
+  color_dark: "#121212"
+  image_dark: assets/images/logo_movie_big.png
+
+  android_12:
+    image: assets/images/logo_movie_big.png
+    icon_background_color: "#ffffff"
+    image_dark: assets/images/logo_movie_big.png
+    icon_background_color_dark: "#121212"
+
+  web: false
