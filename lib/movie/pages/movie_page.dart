@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_movie/app_constants.dart';
-import 'package:flutter_movie/movie/models/movie_model.dart';
+import 'package:flutter_movie/movie/pages/movie_pagination_page.dart';
 import 'package:flutter_movie/movie/providers/movie_get_discover_provider.dart';
-import 'package:flutter_movie/widget/image_widget.dart';
+import 'package:flutter_movie/widget/item_movie_widget.dart';
 import 'package:provider/provider.dart';
 
 class MoviePage extends StatelessWidget {
@@ -34,7 +33,7 @@ class MoviePage extends StatelessWidget {
         ),
         SliverToBoxAdapter(
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -43,7 +42,13 @@ class MoviePage extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MoviePaginationPage(),
+                          ));
+                    },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.black,
                       side: const BorderSide(color: Colors.black),
@@ -104,7 +109,13 @@ class _WidgetDiscoverMovieState extends State<WidgetDiscoverMovie> {
                 itemCount: provider.movies.length,
                 itemBuilder: (context, index, realIndex) {
                   final movie = provider.movies[index];
-                  return ItemMovie(movie);
+                  return ItemMovieWidget(
+                    movie: movie,
+                    heightBackdrop: 300,
+                    widthBackdrop: double.infinity,
+                    heightPoster: 150,
+                    widthPoster: 120,
+                  );
                 },
                 options: CarouselOptions(
                   height: 300,
@@ -138,85 +149,4 @@ class _WidgetDiscoverMovieState extends State<WidgetDiscoverMovie> {
     );
     ;
   }
-}
-
-class ItemMovie extends Container {
-  final MovieModel movie;
-
-  ItemMovie(this.movie, {super.key});
-
-  @override
-  // TODO: implement clipBehavior
-  Clip get clipBehavior => Clip.hardEdge;
-  @override
-  // TODO: implement decoration
-  Decoration? get decoration => BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-      );
-  @override
-  // TODO: implement child
-  Widget? get child => Stack(
-        children: [
-          ImageWidget(
-            imageSrc: '${movie.backdropPath}',
-            height: 300,
-            width: double.infinity,
-          ),
-          Container(
-            height: 300,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  Colors.black.withOpacity(0.8),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-              bottom: 16,
-              left: 16,
-              right: 16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ImageWidget(
-                    imageSrc: '${movie.posterPath}',
-                    height: 150,
-                    width: 100,
-                    radius: 12,
-                  ),
-                  Text(
-                    movie.title,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 16,
-                      ),
-                      Text(
-                        '${movie.voteAverage} (${movie.voteCount}))',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ],
-              ))
-        ],
-      );
 }
