@@ -10,6 +10,7 @@ class ItemMovieWidget extends Container {
   final double widthBackdrop;
   final double heightPoster;
   final double widthPoster;
+  final void Function()? onPressed;
 
   ItemMovieWidget(
       {required this.movie,
@@ -17,6 +18,7 @@ class ItemMovieWidget extends Container {
       required this.widthBackdrop,
       required this.heightPoster,
       required this.widthPoster,
+      this.onPressed,
       super.key});
 
   @override
@@ -48,46 +50,54 @@ class ItemMovieWidget extends Container {
             ),
           ),
           Positioned(
-              bottom: 16,
-              left: 16,
-              right: 16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ImageWidget(
-                    imageSrc: '${movie.posterPath}',
-                    height: heightPoster,
-                    width: widthPoster,
-                    radius: 12,
-                  ),
-                  Text(
-                    movie.title,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 16,
-                      ),
-                      Text(
-                        '${movie.voteAverage} (${movie.voteCount})',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ],
-              ))
+            bottom: 16,
+            left: 16,
+            right: 16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ImageWidget(
+                  imageSrc: '${movie.posterPath}',
+                  height: heightPoster,
+                  width: widthPoster,
+                  radius: 12,
+                ),
+                Text(
+                  movie.title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                      size: 16,
+                    ),
+                    Text(
+                      '${movie.voteAverage} (${movie.voteCount})',
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Positioned.fill(
+              child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => onPressed!(),
+            ),
+          ))
         ],
       );
 }

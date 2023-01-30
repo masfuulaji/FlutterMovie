@@ -3,10 +3,10 @@ import 'package:flutter_movie/movie/models/movie_model.dart';
 import 'package:flutter_movie/movie/repositories/movie_repository_abstract.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class MovieGetDiscoverProvider with ChangeNotifier {
+class MovieGetNowPlayingProvider with ChangeNotifier {
   final MovieRepositoryAbstarct _movieRepositoryAbstarct;
 
-  MovieGetDiscoverProvider(this._movieRepositoryAbstarct);
+  MovieGetNowPlayingProvider(this._movieRepositoryAbstarct);
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -14,11 +14,11 @@ class MovieGetDiscoverProvider with ChangeNotifier {
   final List<MovieModel> _movies = [];
   List<MovieModel> get movies => _movies;
 
-  void getDiscover(BuildContext context) async {
+  void getNowPlaying(BuildContext context) async {
     _isLoading = true;
     notifyListeners();
 
-    final result = await _movieRepositoryAbstarct.getDiscover();
+    final result = await _movieRepositoryAbstarct.getNowPlaying();
 
     result.fold(
       (errorMessage) {
@@ -39,12 +39,12 @@ class MovieGetDiscoverProvider with ChangeNotifier {
     );
   }
 
-  void getDiscoverWithPagination(
+  void getNowPlayingWithPagination(
     BuildContext context, {
     required PagingController pagingController,
     required int page,
   }) async {
-    final result = await _movieRepositoryAbstarct.getDiscover(page: page);
+    final result = await _movieRepositoryAbstarct.getNowPlaying(page: page);
 
     result.fold(
       (errorMessage) {

@@ -4,12 +4,12 @@ import 'package:flutter_movie/app_constants.dart';
 class ImageWidget extends StatelessWidget {
   const ImageWidget(
       {super.key,
-      required this.imageSrc,
+      this.imageSrc,
       required this.height,
       required this.width,
       this.radius = 0});
 
-  final String imageSrc;
+  final String? imageSrc;
   final double height;
   final double width;
   final double radius;
@@ -23,6 +23,13 @@ class ImageWidget extends StatelessWidget {
         height: height,
         width: width,
         fit: BoxFit.cover,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Container(
+              height: height,
+              width: width,
+              decoration: BoxDecoration(color: Colors.grey[300]));
+        },
         errorBuilder: (context, error, stackTrace) => SizedBox(
           height: height,
           width: width,
