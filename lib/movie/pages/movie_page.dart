@@ -89,7 +89,7 @@ class _WidgetTitle extends SliverToBoxAdapter {
           children: [
             Text(
               title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             OutlinedButton(
                 onPressed: onPressed,

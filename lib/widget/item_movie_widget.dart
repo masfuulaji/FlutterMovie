@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_movie/movie/models/movie_detail_model.dart';
 
 import '../movie/models/movie_model.dart';
 import 'image_widget.dart';
 
 class ItemMovieWidget extends Container {
-  final MovieModel movie;
+  final MovieModel? movie;
+  final MovieDetailModel? movieDetail;
 
   final double heightBackdrop;
   final double widthBackdrop;
   final double heightPoster;
   final double widthPoster;
+  final double radius;
   final void Function()? onPressed;
 
   ItemMovieWidget(
-      {required this.movie,
-      required this.heightBackdrop,
+      {required this.heightBackdrop,
       required this.widthBackdrop,
       required this.heightPoster,
       required this.widthPoster,
+      this.radius = 12,
+      this.movie,
+      this.movieDetail,
       this.onPressed,
       super.key});
 
@@ -25,13 +30,14 @@ class ItemMovieWidget extends Container {
   Clip get clipBehavior => Clip.hardEdge;
   @override
   Decoration? get decoration => BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(radius),
       );
   @override
   Widget? get child => Stack(
         children: [
           ImageWidget(
-            imageSrc: '${movie.backdropPath}',
+            imageSrc:
+                '${movie != null ? movie!.backdropPath : movieDetail!.backdropPath}',
             height: heightBackdrop,
             width: widthBackdrop,
           ),
@@ -57,13 +63,14 @@ class ItemMovieWidget extends Container {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ImageWidget(
-                  imageSrc: '${movie.posterPath}',
+                  imageSrc:
+                      '${movie != null ? movie!.posterPath : movieDetail!.posterPath}',
                   height: heightPoster,
                   width: widthPoster,
                   radius: 12,
                 ),
                 Text(
-                  movie.title,
+                  movie != null ? movie!.title : movieDetail!.title,
                   style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -80,7 +87,9 @@ class ItemMovieWidget extends Container {
                       size: 16,
                     ),
                     Text(
-                      '${movie.voteAverage} (${movie.voteCount})',
+                      movie != null
+                          ? '${movie!.voteAverage} (${movie!.voteCount})'
+                          : '${movieDetail!.voteAverage} (${movieDetail!.voteCount})',
                       style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
