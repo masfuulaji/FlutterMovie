@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movie/app_constants.dart';
 
@@ -26,7 +27,7 @@ class ImageWidget extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(radius),
-          child: _image(),
+          child: _cachedNetworkImage(),
         ),
         Positioned.fill(
           child: Material(
@@ -41,6 +42,7 @@ class ImageWidget extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Image _image() {
     return Image.network(
       type == TypeSrcImg.movieDb
@@ -61,6 +63,30 @@ class ImageWidget extends StatelessWidget {
         width: width,
         child: const Icon(Icons.broken_image_rounded),
       ),
+    );
+  }
+
+  CachedNetworkImage _cachedNetworkImage() {
+    return CachedNetworkImage(
+      imageUrl: type == TypeSrcImg.movieDb
+          ? '${AppConstants.imageUrlW500}$imageSrc'
+          : imageSrc!,
+      height: height,
+      width: width,
+      fit: BoxFit.cover,
+      placeholder: (context, url) => Container(
+          height: height,
+          width: width,
+          decoration: BoxDecoration(color: Colors.grey[300])),
+      errorWidget: (context, url, error) {
+        return type == TypeSrcImg.movieDb
+            ? SizedBox(
+                height: height,
+                width: width,
+                child: const Icon(Icons.broken_image_rounded),
+              )
+            : const SizedBox();
+      },
     );
   }
 }
