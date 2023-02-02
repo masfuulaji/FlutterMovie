@@ -56,11 +56,14 @@ class _DiscoverMovieComponentState extends State<DiscoverMovieComponent> {
                     heightPoster: 150,
                     widthPoster: 120,
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return MovieDetailPage(id: movie.id);
-                        },
-                      ));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MovieDetailPage(id: movie.id);
+                          },
+                        ),
+                      );
                     },
                   );
                 },

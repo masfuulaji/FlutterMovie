@@ -3,6 +3,7 @@ import 'package:flutter_movie/movie/components/movie_discover_component.dart';
 import 'package:flutter_movie/movie/components/movie_now_playing_component.dart';
 import 'package:flutter_movie/movie/components/movie_top_rated_component.dart';
 import 'package:flutter_movie/movie/pages/movie_pagination_page.dart';
+import 'package:flutter_movie/movie/pages/movie_search_page.dart';
 
 class MoviePage extends StatelessWidget {
   const MoviePage({super.key});
@@ -26,6 +27,14 @@ class MoviePage extends StatelessWidget {
               const Text('Movie DB'),
             ],
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: MovieSearchPage());
+              },
+              icon: const Icon(Icons.search),
+            ),
+          ],
           floating: true,
           snap: true,
           centerTitle: true,
@@ -70,7 +79,12 @@ class MoviePage extends StatelessWidget {
             );
           },
         ),
-        const MovieNowPlayingComponent()
+        const MovieNowPlayingComponent(),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 20,
+          ),
+        )
       ],
     ));
   }

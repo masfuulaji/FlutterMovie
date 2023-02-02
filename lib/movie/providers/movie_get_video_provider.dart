@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movie/movie/models/movie_detail_model.dart';
+import 'package:flutter_movie/movie/models/movie_video_model.dart';
 import 'package:flutter_movie/movie/repositories/movie_repository_abstract.dart';
 
-class MovieGetDetailProvider with ChangeNotifier {
+class MovieGetVideoProvider with ChangeNotifier {
   final MovieRepositoryAbstarct _movieRepository;
 
-  MovieGetDetailProvider(this._movieRepository);
+  MovieGetVideoProvider(this._movieRepository);
 
-  MovieDetailModel? _movie;
-  MovieDetailModel? get movie => _movie;
+  MovieVideosModel? _video;
+  MovieVideosModel? get video => _video;
 
-  void getDetail(BuildContext context, {required int id}) async {
-    _movie = null;
+  void getVideo(BuildContext context, {required int id}) async {
+    _video = null;
     notifyListeners();
 
-    final result = await _movieRepository.getDetail(id: id);
+    final result = await _movieRepository.getVideo(id: id);
     result.fold((messageError) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(messageError)));
-      _movie = null;
+      _video = null;
       notifyListeners();
       return;
     }, (response) {
-      _movie = response;
+      _video = response;
       notifyListeners();
       return;
     });

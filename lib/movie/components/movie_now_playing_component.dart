@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_movie/movie/pages/movie_detail_page.dart';
 import 'package:flutter_movie/movie/providers/movie_get_now_playing_provider.dart';
 import 'package:flutter_movie/widget/image_widget.dart';
 import 'package:provider/provider.dart';
@@ -43,75 +44,97 @@ class _MovieNowPlayingComponentState extends State<MovieNowPlayingComponent> {
                   itemBuilder: (context, index) {
                     final movie = value.movies[index];
 
-                    return Container(
-                      padding: const EdgeInsets.all(8),
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.transparent,
-                            Colors.black.withOpacity(0.7),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          ImageWidget(
-                            imageSrc: movie.posterPath,
-                            height: 200,
-                            width: 120,
-                            radius: 8,
+                    return Stack(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.7),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  movie.title,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                Row(
+                          child: Row(
+                            children: [
+                              ImageWidget(
+                                imageSrc: movie.posterPath,
+                                height: 200,
+                                width: 120,
+                                radius: 8,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                      size: 16,
+                                    Text(
+                                      movie.title,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.star,
+                                          color: Colors.yellow,
+                                          size: 16,
+                                        ),
+                                        Text(
+                                          '${movie.voteAverage} (${movie.voteCount})',
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ],
                                     ),
                                     Text(
-                                      '${movie.voteAverage} (${movie.voteCount})',
+                                      movie.overview,
+                                      maxLines: 3,
                                       style: const TextStyle(
                                           color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
+                                          fontStyle: FontStyle.italic),
                                     ),
                                   ],
                                 ),
-                                Text(
-                                  movie.overview,
-                                  maxLines: 3,
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      fontStyle: FontStyle.italic),
-                                ),
-                              ],
+                              )
+                            ],
+                          ),
+                        ),
+                        Positioned.fill(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(8),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return MovieDetailPage(id: movie.id);
+                                    },
+                                  ),
+                                );
+                              },
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     );
                   },
                   separatorBuilder: (context, index) => const SizedBox(

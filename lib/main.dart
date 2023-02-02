@@ -4,6 +4,7 @@ import 'package:flutter_movie/movie/pages/movie_page.dart';
 import 'package:flutter_movie/movie/providers/movie_get_discover_provider.dart';
 import 'package:flutter_movie/movie/providers/movie_get_now_playing_provider.dart';
 import 'package:flutter_movie/movie/providers/movie_get_top_rated_provider.dart';
+import 'package:flutter_movie/movie/providers/movie_search_provider.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +31,10 @@ class App extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => getIt<MovieGetNowPlayingProvider>(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => getIt<MovieSearchProvider>(),
+        ),
       ],
       child: MaterialApp(
         title: 'Movie DB',

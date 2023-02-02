@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie/movie/models/movie_model.dart';
+import 'package:flutter_movie/movie/pages/movie_detail_page.dart';
 import 'package:flutter_movie/movie/providers/movie_get_discover_provider.dart';
 import 'package:flutter_movie/movie/providers/movie_get_now_playing_provider.dart';
 import 'package:flutter_movie/movie/providers/movie_get_top_rated_provider.dart';
@@ -89,6 +90,16 @@ class _MoviePaginationPageState extends State<MoviePaginationPage> {
             widthBackdrop: double.infinity,
             heightPoster: 120,
             widthPoster: 80,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return MovieDetailPage(id: item.id);
+                  },
+                ),
+              );
+            },
           ),
         ),
         separatorBuilder: (context, index) => const SizedBox(height: 16),

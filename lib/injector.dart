@@ -4,6 +4,8 @@ import 'package:flutter_movie/movie/providers/movie_get_detail_provider.dart';
 import 'package:flutter_movie/movie/providers/movie_get_discover_provider.dart';
 import 'package:flutter_movie/movie/providers/movie_get_now_playing_provider.dart';
 import 'package:flutter_movie/movie/providers/movie_get_top_rated_provider.dart';
+import 'package:flutter_movie/movie/providers/movie_get_video_provider.dart';
+import 'package:flutter_movie/movie/providers/movie_search_provider.dart';
 import 'package:flutter_movie/movie/repositories/movie_repository.dart';
 import 'package:flutter_movie/movie/repositories/movie_repository_abstract.dart';
 import 'package:get_it/get_it.dart';
@@ -23,6 +25,12 @@ void setup() {
   );
   getIt.registerFactory<MovieGetDetailProvider>(
     () => MovieGetDetailProvider(getIt()),
+  );
+  getIt.registerFactory<MovieGetVideoProvider>(
+    () => MovieGetVideoProvider(getIt()),
+  );
+  getIt.registerFactory<MovieSearchProvider>(
+    () => MovieSearchProvider(getIt()),
   );
 
   //Register Movie Repository
